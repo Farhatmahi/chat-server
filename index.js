@@ -5,6 +5,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const userRoutes = require("./Routers/userRoutes");
+const chatRoutes = require("./Routers/chatRoutes");
 
 //middleware
 app.use(cors());
@@ -38,3 +39,4 @@ connectDB().catch(err => console.log(err))
 //routes
 
 app.use('/user', userRoutes)
+app.use('/chat', chatRoutes)
