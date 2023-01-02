@@ -10,10 +10,9 @@ const messageSchema = mongoose.Schema(
     },
   },
   {
-    timeStamps: true,
+    timestamps: true,
   }
 );
 
-const Message = mongoose.model("Message", messageSchema)
+const Message = mongoose.model("Message", messageSchema);
 module.exports = Message;
-

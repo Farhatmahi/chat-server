@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema(
       default: "https://img.icons8.com/fluency/96/000000/user-male-circle.png",
     },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
