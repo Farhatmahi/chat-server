@@ -5,36 +5,31 @@ const asyncHandler = require("express-async-handler");
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  //will check if there's a token 
+  //will check if there's a token
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-
       //take the token
       token = req.headers.authorization.split(" ")[1];
 
       //decode
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       //find
-      req.user = await User.findById(decoded.id).select("-password")
+      req.user = await User.findById(decoded.id).select("-password");
 
-      next()
-
-
+      next();
     } catch (err) {
-      res.status(401).send({message : "Unauthorized"})
-
+      res.status(401).send({ message: "Unauthorized" });
     }
   }
 
-  if(!token){
-    res.status(401).send({message : "No token found"})
+  if (!token) {
+    res.status(401).send({ message: "No token found" });
+    console.log("401");
   }
-
 });
 
 module.exports = { protect };

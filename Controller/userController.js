@@ -20,16 +20,18 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     image,
+    token: generateToken(email),
   });
 
   if (user) {
-    res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      image: user.image,
-      token: generateToken(user._id),
-    });
+    // const updateUser = await User.findOneAndUpdate(user._id, {
+    //   token : generatedToken
+    // },
+    // { new: true } )
+
+    // console.log(updateUser);
+
+    res.status(200).json(user);
     console.log("Data successfully saved");
   }
 });
@@ -46,7 +48,14 @@ const allUsers = asyncHandler(async (req, res) => {
     : {};
 
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
+  console.log(req.user._id);
+
   res.send(users);
 });
 
-module.exports = { allUsers, registerUser };
+const checkExistedUser = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  res.send(users);
+});
+
+module.exports = { allUsers, registerUser, checkExistedUser };

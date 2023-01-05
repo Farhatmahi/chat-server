@@ -50,18 +50,17 @@ const accessChat = asyncHandler(async (req, res) => {
 
 const fetchChats = asyncHandler(async (req, res) => {
   try {
-    //it'll check if the logged in user is on the users array, if yes, it'll populate with the data and return the result, which is basically all the chats of the logged in user.
     Chat.find({ users: { $elemMatch: { $eq: req.user._id } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
       .sort({ updatedAt: -1 })
-      .then(async (result) => {
-        result = await User.populate(result, {
+      .then(async (results) => {
+        results = await User.populate(results, {
           path: "latestMessage.sender",
-          select: "username email image",
+          select: "name pic email",
         });
-        res.status(200).send(result);
+        res.status(200).send(results);
       });
   } catch (error) {
     res.status(400);
