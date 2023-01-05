@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "https://img.icons8.com/fluency/96/000000/user-male-circle.png",
     },
-    token: { type: String},
+    token: { type: String },
   },
   { timestamps: true }
 );
